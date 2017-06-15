@@ -52,14 +52,13 @@ namespace FluentIL.Infos
                     $"__assembly__{DateTime.Now.Millisecond}"
                     );
 
-                var assemblyBuilder = Thread.GetDomain().DefineDynamicAssembly(
+                var assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(
                     assemblyName,
-                    AssemblyBuilderAccess.RunAndSave
+                    AssemblyBuilderAccess.Run
                     );
 
                 _moduleBuilder = assemblyBuilder.DefineDynamicModule(
-                    assemblyBuilder.GetName().Name,
-                    false
+                    assemblyBuilder.GetName().Name
                     );
             }
 
@@ -204,7 +203,7 @@ namespace FluentIL.Infos
 
         public Type Complete()
         {
-            return TypeBuilder.CreateType();
+            return TypeBuilder.CreateTypeInfo();
         }
     }
 }

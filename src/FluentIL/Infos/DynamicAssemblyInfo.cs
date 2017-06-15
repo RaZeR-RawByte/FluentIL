@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Security.Policy;
 using System.Threading;
 
 namespace FluentIL.Infos
@@ -20,16 +20,13 @@ namespace FluentIL.Infos
                 assemblyFileName
                 );
 
-            _assemblyBuilder = Thread.GetDomain().DefineDynamicAssembly(
+            _assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(
                 assemblyName,
-                AssemblyBuilderAccess.RunAndSave
+                AssemblyBuilderAccess.Run
                 );
 
             _moduleBuilder = _assemblyBuilder.DefineDynamicModule(
-                _assemblyBuilder.GetName().Name,
-                assemblyFileName,
-                false
-                );
+                _assemblyBuilder.GetName().Name);
         }
 
         public DynamicTypeInfo WithType(string typeName)
@@ -40,14 +37,21 @@ namespace FluentIL.Infos
 
         }
 
-        public void SetEntryPoint(DynamicMethodInfo method) {
-            _assemblyBuilder.SetEntryPoint(method.MethodBuilder);
+        public void SetEntryPoint(DynamicMethodInfo method)
+        {
+            throw new NotImplementedException();
+            /*
+            AssemblyBuilder.SetEntryPoint(method.MethodBuilder);
+             */
         }
 
         public void Save()
         {
+            throw new NotImplementedException();
+            /*
             _types.ForEach(t => t.Complete());
-            _assemblyBuilder.Save(_assemblyFileName);
+            AssemblyBuilder.Save(_assemblyFileName);
+             */
         }
     }
 }
